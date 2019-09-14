@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+import 'package:pokemon_app/pokemon.dart';
 
 void main()=>runApp(MaterialApp(
   title: "Pokemon App",
@@ -6,7 +10,32 @@ void main()=>runApp(MaterialApp(
   debugShowCheckedModeBanner: false,
 ));
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+
+  @override
+  HomePageState createState() => HomePageState();
+}
+
+class HomePageState extends State<HomePage> {
+  var url = "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json";
+
+  PokeHub pokeHub;
+
+  @override
+  void initState() {
+    super.initState();
+
+    fetchData();
+    print("2nd work!");
+  }
+
+  fetchData() async{
+    var res = await http.get(url);
+    var decodedJson = jsonDecode(res.body);
+
+    pokeHub = PokeHub.fromJson(decodedJson);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
