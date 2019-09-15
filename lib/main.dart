@@ -1,13 +1,13 @@
  import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+import 'package:pokemon_app/pokemondetail.dart';
 import 'package:pokemon_app/pokemon.dart';
 
 void main() =>  runApp(MaterialApp(
   title: "Pokemon App",
   home: HomePage(),
-  debugShowCheckedModeBanner: false,
+  debugShowCheckedModeBanner: false, 
 ));
 
 class HomePage extends StatefulWidget {
@@ -53,29 +53,35 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.all(2.0),
             child: InkWell( 
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) =>PokeDetail(
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(
+                    builder: (context) => PokeDetail(
                   pokemon: poke,
                 )));
               },
-            child: Card(
-              elevation: 3.0,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Container(
-                      height: 100.0,
-                      width: 100.0,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(image: NetworkImage(poke.img))
-                      ),
-                    ),
-                    Text(poke.name,
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
+            child: Hero(
+              tag: poke.img,
+              child: Card(
+                elevation: 3.0,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Container(
+                        height: 100.0,
+                        width: 100.0,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(image: NetworkImage(poke.img))
                         ),
-                      )
-                  ],
+                      ),
+                      Text(poke.name,
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                          ),
+                        )
+                    ],
+                ),
               ),
             ),
           ),
