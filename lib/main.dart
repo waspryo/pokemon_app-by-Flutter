@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:pokemon_app/pokemon.dart';
 
-void main()=>runApp(MaterialApp(
+void main() =>  runApp(MaterialApp(
   title: "Pokemon App",
   home: HomePage(),
   debugShowCheckedModeBanner: false,
@@ -13,10 +13,11 @@ void main()=>runApp(MaterialApp(
 class HomePage extends StatefulWidget {
 
   @override
-  HomePageState createState() => HomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class HomePageState extends State<HomePage> {
+
+class _HomePageState extends State<HomePage> {
   var url = "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json";
 
   PokeHub pokeHub;
@@ -26,7 +27,6 @@ class HomePageState extends State<HomePage> {
     super.initState();
 
     fetchData();
-    print("2nd work!");
   }
 
   fetchData() async{
@@ -43,9 +43,33 @@ class HomePageState extends State<HomePage> {
         title: Text("Pokemon App"),
         backgroundColor: Colors.cyan,
         ),
-        body: Center(
-          child: Text("Hello from Pokemon App"),
-        ),
+        body: GridView.count(
+          crossAxisCount: 2, 
+          children: pokeHub.pokemon.map((poke) => Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: Card(
+              child: Card(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      height: 100.0,
+                      width: 100.0,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(image: NetworkImage(poke.img))
+                      ),
+                    ),
+                    Text(poke.name,
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                        ),
+                      )
+                  ],
+              ),),
+            ),
+          ))
+          .toList(),
+          ),
         drawer: Drawer(),
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
