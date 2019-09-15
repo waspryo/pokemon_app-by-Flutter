@@ -32,8 +32,9 @@ class _HomePageState extends State<HomePage> {
   fetchData() async{
     var res = await http.get(url);
     var decodedJson = jsonDecode(res.body);
-
     pokeHub = PokeHub.fromJson(decodedJson);
+    print(pokeHub.toJson());
+    setState(() {});
   }
 
   @override
@@ -43,13 +44,21 @@ class _HomePageState extends State<HomePage> {
         title: Text("Pokemon App"),
         backgroundColor: Colors.cyan,
         ),
-        body: GridView.count(
+        body: pokeHub == null
+        ? Center(child: CircularProgressIndicator(),
+        ) :
+        GridView.count(
           crossAxisCount: 2, 
           children: pokeHub.pokemon.map((poke) => Padding(
             padding: const EdgeInsets.all(2.0),
+            child: InkWell( 
+              onTap: (){
+                
+              },
             child: Card(
-              child: Card(
+              elevation: 3.0,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Container(
                       height: 100.0,
@@ -65,8 +74,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                       )
                   ],
-              ),),
+              ),
             ),
+          ),
           ))
           .toList(),
           ),
